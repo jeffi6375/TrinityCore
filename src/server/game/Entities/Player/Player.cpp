@@ -1124,7 +1124,7 @@ void Player::Update(uint32 p_time)
         }
     }
 
-    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING))
+    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING) && GetRestState() == REST_STATE_RESTED)
     {
         // @hearthwards-begin
         float xp = GetRestBonus();
