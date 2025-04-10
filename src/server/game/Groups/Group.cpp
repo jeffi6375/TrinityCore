@@ -1536,6 +1536,10 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
                         roll->getLoot()->NotifyItemRemoved(roll->itemSlot);
                         roll->getLoot()->unlootedCount--;
                         player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, item->GetAllowedLooters());
+                        // @hearthwards-begin
+                        const ItemTemplate* pProto = sObjectMgr->GetItemTemplate(item->itemid);
+                        player->GiveRestedXP(pProto->SellPrice * item->count, nullptr);
+                        // @hearthwards-end
                     }
                     else
                     {
@@ -1603,6 +1607,10 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
                             roll->getLoot()->NotifyItemRemoved(roll->itemSlot);
                             roll->getLoot()->unlootedCount--;
                             player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, item->GetAllowedLooters());
+                            // @hearthwards-begin
+                            const ItemTemplate* pProto = sObjectMgr->GetItemTemplate(item->itemid);
+                            player->GiveRestedXP(pProto->SellPrice * item->count, nullptr);
+                            // @hearthwards-end
                         }
                         else
                         {

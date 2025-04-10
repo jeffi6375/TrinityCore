@@ -1,4 +1,6 @@
 # TODO
+* Make winning magic items give XP ✅
+* Players are always in rested state
+* Group should share rested XP from loot rolls
 * Figure out why GiveRestedXP and GiveXP differ
-* Figure out how to change client messages like "You feel rested."
 * Fix Continued MaNGOS loot tables
