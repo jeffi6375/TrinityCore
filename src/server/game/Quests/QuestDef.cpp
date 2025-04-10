@@ -42,7 +42,9 @@ Quest::Quest(Field* questRecord)
     _requiredFactionValue1 = questRecord[11].GetInt32();
     _requiredFactionValue2 = questRecord[12].GetInt32();
     _rewardNextQuest = questRecord[13].GetUInt32();
-    _rewardXPDifficulty = questRecord[14].GetUInt8();
+    // @hearthwards-begin
+    _rewardXPDifficulty = 0;
+    // @hearthwards-end
     _rewardMoney = questRecord[15].GetInt32();
     _rewardBonusMoney = questRecord[16].GetUInt32();
     _rewardDisplaySpell = questRecord[17].GetUInt32();
@@ -290,11 +292,10 @@ int32 Quest::GetRewOrReqMoney(Player const* player) const
     if (_rewardMoney < 0)
         return _rewardMoney;
 
+    // @hearthwards-begin
     // RewardMoney: the positive amount
-    if (!player || !player->IsMaxLevel())
-        return int32(_rewardMoney * sWorld->getRate(RATE_MONEY_QUEST));
-    else // At level cap, the money reward is the maximum amount between normal and bonus money reward
-        return std::max(int32(GetRewMoneyMaxLevel()), int32(_rewardMoney * sWorld->getRate(RATE_MONEY_QUEST)));
+    return std::max(int32(GetRewMoneyMaxLevel()), int32(_rewardMoney * sWorld->getRate(RATE_MONEY_QUEST)));
+    // @hearthwards-end
 }
 
 uint32 Quest::GetRewMoneyMaxLevel() const
@@ -423,8 +424,10 @@ WorldPacket Quest::BuildQueryData(LocaleConstant loc) const
     response.Info.RewardNextQuest = GetNextQuestInChain();
     response.Info.RewardXPDifficulty = GetXPId();
 
-    response.Info.RewardMoney = GetRewOrReqMoney();
-    response.Info.RewardBonusMoney = GetRewMoneyMaxLevel();
+    // @hearthwards-begin
+    response.Info.RewardMoney = GetRewMoneyMaxLevel();
+    response.Info.RewardBonusMoney = 0;
+    // @hearthwards-end
     response.Info.RewardDisplaySpell = GetRewSpell();
     response.Info.RewardSpell = GetRewSpellCast();
 

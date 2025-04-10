@@ -27,12 +27,13 @@ Hunt monsters, collect items, make fancy weapons and hats, hunt tougher monsters
 * Rested experience now accumulates as you kill monsters and loot items (1 copper = 1 XP) ✅
 * Rested experience becomes normal experience when you get back to a rested area ✅
 * Rested experience is lost on death ✅
-* Quests don't give experience ✅
 * Rested experience is reduced if you destroy an item you got rested experience from
-* Quests give a gold reward as if max level
+* Rested experience from looted items is shared
+* Quests don't give experience ✅
+* Quests give a gold reward as if max level ✅
 
 ## Ideas
-* Game Masters run events to change the world with the players
+* Game Master run events to change the world with the players
 * Players can create NPCs, quests and items at a cost
 * Gear doesn't use rating but flat percentages to help make old raids relevant
 * Retainers who you can find in the world that can help you on your adventure
