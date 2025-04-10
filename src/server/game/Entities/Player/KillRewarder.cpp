@@ -154,7 +154,9 @@ inline void KillRewarder::_RewardXP(Player* player, float rate)
         xp *= player->GetTotalAuraMultiplier(SPELL_AURA_MOD_XP_PCT);
 
         // 4.2.3. Give XP to player.
-        player->GiveXP(xp, _victim, _groupRate);
+        // @hearthwards-begin
+        player->GiveRestedXP(xp, _victim, _groupRate);
+        // @hearthwards-end
         if (Pet* pet = player->GetPet())
             // 4.2.4. If player has pet, reward pet with XP (100% for single player, 50% for group case).
             pet->GivePetXP(_group ? xp / 2 : xp);

@@ -23,12 +23,13 @@ Hunt monsters, collect items, make fancy weapons and hats, hunt tougher monsters
 * Stats don't increase on level up ✅
 * Base hit points significantly reduced ✅
 * Spell hit chance scales like melee (5% miss chance + 1% per level) ✅
-* You don't gain normal experience from killing monsters
-* Quests don't give experience
+* You don't gain normal experience from killing monsters ✅
+* Rested experience now accumulates as you kill monsters and loot items (1 copper = 1 XP) ✅
+* Rested experience becomes normal experience when you get back to a rested area ✅
+* Rested experience is lost on death ✅
+* Quests don't give experience ✅
+* Rested experience is reduced if you destroy an item you got rested experience from
 * Quests give a gold reward as if max level
-* Rested experience now accumulates as you kill monsters and loot items (1 copper = 1 XP)
-* Rested experience is lost on death
-* Rested experience becomes normal experience when you get back to a rested area
 
 ## Ideas
 * Game Masters run events to change the world with the players

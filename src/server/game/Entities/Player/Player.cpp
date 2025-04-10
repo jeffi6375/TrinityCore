@@ -1126,22 +1126,11 @@ void Player::Update(uint32 p_time)
 
     if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING))
     {
-        if (roll_chance_i(3) && _restTime > 0)      // freeze update
-        {
-            time_t currTime = GameTime::GetGameTime();
-            time_t timeDiff = currTime - _restTime;
-            if (timeDiff >= 10)                             // freeze update
-            {
-                _restTime = currTime;
-
-                float bubble = 0.125f * sWorld->getRate(RATE_REST_INGAME);
-                float extraPerSec = ((float)GetUInt32Value(PLAYER_NEXT_LEVEL_XP) / 72000.0f) * bubble;
-
-                // speed collect rest bonus (section/in hour)
-                float currRestBonus = GetRestBonus();
-                SetRestBonus(currRestBonus + timeDiff * extraPerSec);
-            }
-        }
+        // @hearthwards-begin
+        float xp = GetRestBonus();
+        GiveXP(xp, nullptr);
+        SetRestBonus(0.0f);
+        // @hearthwards-end
     }
 
     if (m_weaponChangeTimer > 0)
@@ -2425,11 +2414,10 @@ void Player::GiveXP(uint32 xp, Unit* victim, float group_rate)
     uint32 bonus_xp;
     bool recruitAFriend = GetsRecruitAFriendBonus(true);
 
-    // RaF does NOT stack with rested experience
+    // @hearthwards-begin
     if (recruitAFriend)
         bonus_xp = 2 * xp; // xp + bonus_xp must add up to 3 * xp for RaF; calculation for quests done client-side
-    else
-        bonus_xp = victim ? GetXPRestBonus(xp) : 0; // XP resting bonus
+    // @hearthwards-end
 
     SendLogXPGain(xp, victim, bonus_xp, recruitAFriend, group_rate);
 
@@ -2449,6 +2437,39 @@ void Player::GiveXP(uint32 xp, Unit* victim, float group_rate)
 
     SetXP(newXP);
 }
+
+// @hearthwards-begin
+void Player::GiveRestedXP(uint32 xp, Unit* victim, float group_rate)
+{
+    if (xp < 1)
+        return;
+
+    if (!IsAlive() && !GetBattlegroundId())
+        return;
+
+    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_NO_XP_GAIN))
+        return;
+
+    if (victim && victim->GetTypeId() == TYPEID_UNIT && !victim->ToCreature()->hasLootRecipient())
+        return;
+
+    uint8 level = GetLevel();
+
+    sScriptMgr->OnGivePlayerXP(this, xp, victim);
+
+    // XP to money conversion processed in Player::RewardQuest
+    if (IsMaxLevel())
+        return;
+
+    uint32 bonus_xp;
+    bool recruitAFriend = GetsRecruitAFriendBonus(true);
+
+    if (recruitAFriend)
+        bonus_xp = 2 * xp; // xp + bonus_xp must add up to 3 * xp for RaF; calculation for quests done client-side
+
+    SetRestBonus(GetRestBonus() + xp + bonus_xp);
+}
+// @hearthwards-end
 
 // Update player to next level
 // Current player experience not update (must be update by caller)
@@ -4525,6 +4546,10 @@ void Player::KillPlayer()
 
     // update visibility
     UpdateObjectVisibility();
+
+    // @hearthwards-begin
+    SetRestBonus(0.0f);
+    // @hearthwards-end
 }
 
 void Player::OfflineResurrect(ObjectGuid const& guid, CharacterDatabaseTransaction trans)
@@ -17549,21 +17574,11 @@ bool Player::LoadFromDB(ObjectGuid guid, CharacterDatabaseQueryHolder const& hol
     InitTaxiNodesForLevel();
     InitRunes();
 
+    // @hearthwards-begin
     // rest bonus can only be calculated after InitStatsForLevel()
     m_rest_bonus = fields[26].GetFloat();
-
-    if (time_diff > 0)
-    {
-        //speed collect rest bonus in offline, in logout, far from tavern, city (section/in hour)
-        float bubble0 = 0.031f;
-        //speed collect rest bonus in offline, in logout, in tavern, city (section/in hour)
-        float bubble1 = 0.125f;
-        float bubble = fields[28].GetUInt8() > 0
-            ? bubble1*sWorld->getRate(RATE_REST_OFFLINE_IN_TAVERN_OR_CITY)
-            : bubble0*sWorld->getRate(RATE_REST_OFFLINE_IN_WILDERNESS);
-
-        SetRestBonus(GetRestBonus() + time_diff*((float)GetUInt32Value(PLAYER_NEXT_LEVEL_XP) / 72000)*bubble);
-    }
+    SetRestBonus(GetRestBonus());
+    // @hearthwards-end
 
     // load skills after InitStatsForLevel because it triggering aura apply also
     _LoadSkills(holder.GetPreparedResult(PLAYER_LOGIN_QUERY_LOAD_SKILLS));
@@ -21131,26 +21146,18 @@ void Player::SetRestBonus(float rest_bonus_new)
     if (rest_bonus_new < 0)
         rest_bonus_new = 0;
 
-    float rest_bonus_max = (float)GetUInt32Value(PLAYER_NEXT_LEVEL_XP)*1.5f/2;
+    // @hearthwards-begin
+    m_rest_bonus = rest_bonus_new;
 
-    if (rest_bonus_new > rest_bonus_max)
-        m_rest_bonus = rest_bonus_max;
-    else
-        m_rest_bonus = rest_bonus_new;
+    // Update data for client
+    if (m_rest_bonus > 1)
+        SetRestState(REST_STATE_RESTED);
+    else if (m_rest_bonus <= 0)
+        SetRestState(REST_STATE_NOT_RAF_LINKED);
 
-    // update data for client
-    if ((GetsRecruitAFriendBonus(true) && (GetSession()->IsARecruiter() || GetSession()->GetRecruiterId() != 0)))
-        SetRestState(REST_STATE_RAF_LINKED);
-    else
-    {
-        if (m_rest_bonus > 10)
-            SetRestState(REST_STATE_RESTED);
-        else if (m_rest_bonus <= 1)
-            SetRestState(REST_STATE_NOT_RAF_LINKED);
-    }
-
-    //RestTickUpdate
-    SetUInt32Value(PLAYER_REST_STATE_EXPERIENCE, uint32(m_rest_bonus));
+    // RestTickUpdate
+    SetUInt32Value(PLAYER_REST_STATE_EXPERIENCE, uint32(m_rest_bonus / 2.0f));
+    // @hearthwards-end
 }
 
 bool Player::ActivateTaxiPathTo(std::vector<uint32> const& nodes, Creature* npc /*= nullptr*/, uint32 spellid /*= 0*/)
@@ -24764,6 +24771,10 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
         if (loot->containerID > 0)
             sLootItemStorage->RemoveStoredLootItemForContainer(loot->containerID, item->itemid, item->count, item->itemIndex);
 
+        // @hearthwards-begin
+        const ItemTemplate* pProto = newitem->GetTemplate();
+        GiveRestedXP(pProto->SellPrice * item->count, nullptr);
+        // @hearthwards-end
     }
     else
         SendEquipError(msg, nullptr, nullptr, item->itemid);
