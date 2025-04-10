@@ -502,13 +502,14 @@ bool Player::Create(ObjectGuid::LowType guidlow, CharacterCreateInfo* createInfo
 
     SetInt32Value(PLAYER_FIELD_WATCHED_FACTION_INDEX, uint32(-1));  // -1 is default value
 
+    // @hearthwards-begin
     SetSkinId(createInfo->Skin);
     SetFaceId(createInfo->Face);
     SetHairStyleId(createInfo->HairStyle);
     SetHairColorId(createInfo->HairColor);
     SetFacialStyle(createInfo->FacialHair);
-    SetRestState((GetSession()->IsARecruiter() || GetSession()->GetRecruiterId() != 0) ? REST_STATE_RAF_LINKED : REST_STATE_NOT_RAF_LINKED);
     SetNativeGender(Gender(createInfo->Gender));
+    // @hearthwards-end
 
     // set starting level
     SetLevel(GetStartLevel(createInfo->Class), false);
@@ -1124,7 +1125,7 @@ void Player::Update(uint32 p_time)
         }
     }
 
-    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING) && GetRestState() == REST_STATE_RESTED)
+    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING))
     {
         // @hearthwards-begin
         float xp = GetRestBonus();
@@ -17131,7 +17132,9 @@ bool Player::LoadFromDB(ObjectGuid guid, CharacterDatabaseQueryHolder const& hol
     SetHairColorId(fields[12].GetUInt8());
     SetFacialStyle(fields[13].GetUInt8());
     SetBankBagSlotCount(fields[14].GetUInt8());
-    SetRestState(fields[15].GetUInt8());
+    // @hearthwards-begin
+    SetRestState(REST_STATE_RESTED);
+    // @hearthwards-end
     SetNativeGender(Gender(fields[5].GetUInt8()));
     SetByteValue(PLAYER_BYTES_3, PLAYER_BYTES_3_OFFSET_INEBRIATION, fields[54].GetUInt8());
 
@@ -21152,12 +21155,6 @@ void Player::SetRestBonus(float rest_bonus_new)
 
     // @hearthwards-begin
     m_rest_bonus = rest_bonus_new;
-
-    // Update data for client
-    if (m_rest_bonus >= 1)
-        SetRestState(REST_STATE_RESTED);
-    else if (m_rest_bonus < 1)
-        SetRestState(REST_STATE_NOT_RAF_LINKED);
 
     // RestTickUpdate
     SetUInt32Value(PLAYER_REST_STATE_EXPERIENCE, uint32(m_rest_bonus / 2.0f));
