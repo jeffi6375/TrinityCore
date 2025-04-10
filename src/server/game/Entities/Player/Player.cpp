@@ -2417,6 +2417,8 @@ void Player::GiveXP(uint32 xp, Unit* victim, float group_rate)
     // @hearthwards-begin
     if (recruitAFriend)
         bonus_xp = 2 * xp; // xp + bonus_xp must add up to 3 * xp for RaF; calculation for quests done client-side
+    else
+        bonus_xp = 0;
     // @hearthwards-end
 
     SendLogXPGain(xp, victim, bonus_xp, recruitAFriend, group_rate);
@@ -2466,6 +2468,8 @@ void Player::GiveRestedXP(uint32 xp, Unit* victim, float group_rate)
 
     if (recruitAFriend)
         bonus_xp = 2 * xp; // xp + bonus_xp must add up to 3 * xp for RaF; calculation for quests done client-side
+    else
+        bonus_xp = 0;
 
     SetRestBonus(GetRestBonus() + xp + bonus_xp);
 }
@@ -21150,9 +21154,9 @@ void Player::SetRestBonus(float rest_bonus_new)
     m_rest_bonus = rest_bonus_new;
 
     // Update data for client
-    if (m_rest_bonus > 1)
+    if (m_rest_bonus >= 1)
         SetRestState(REST_STATE_RESTED);
-    else if (m_rest_bonus <= 0)
+    else if (m_rest_bonus < 1)
         SetRestState(REST_STATE_NOT_RAF_LINKED);
 
     // RestTickUpdate
