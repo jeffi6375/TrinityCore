@@ -24773,8 +24773,22 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
             sLootItemStorage->RemoveStoredLootItemForContainer(loot->containerID, item->itemid, item->count, item->itemIndex);
 
         // @hearthwards-begin
-        const ItemTemplate* pProto = newitem->GetTemplate();
-        GiveRestedXP(pProto->SellPrice * item->count, nullptr);
+        const ItemTemplate* pProto = sObjectMgr->GetItemTemplate(item->itemid);
+        const uint32 xp = pProto->SellPrice * item->count;
+
+        if (Group* group = GetGroup())
+        {
+            const uint32 membersCount = group->GetMembersCount();
+
+            for (GroupReference const* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+                if (Player* member = itr->GetSource())
+                    if (member->IsAtGroupRewardDistance(this))
+                        member->GiveRestedXP(xp / membersCount, nullptr);
+        }
+        else
+        {
+            GiveRestedXP(xp, nullptr);
+        }
         // @hearthwards-end
     }
     else

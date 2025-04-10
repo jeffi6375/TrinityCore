@@ -1536,9 +1536,24 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
                         roll->getLoot()->NotifyItemRemoved(roll->itemSlot);
                         roll->getLoot()->unlootedCount--;
                         player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, item->GetAllowedLooters());
+
                         // @hearthwards-begin
                         const ItemTemplate* pProto = sObjectMgr->GetItemTemplate(item->itemid);
-                        player->GiveRestedXP(pProto->SellPrice * item->count, nullptr);
+                        const uint32 xp = pProto->SellPrice * item->count;
+
+                        if (Group* group = player->GetGroup())
+                        {
+                            const uint32 membersCount = group->GetMembersCount();
+
+                            for (GroupReference const* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+                                if (Player* member = itr->GetSource())
+                                    if (member->IsAtGroupRewardDistance(player))
+                                        member->GiveRestedXP(xp / membersCount, nullptr);
+                        }
+                        else
+                        {
+                            player->GiveRestedXP(xp, nullptr);
+                        }
                         // @hearthwards-end
                     }
                     else
@@ -1607,9 +1622,24 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
                             roll->getLoot()->NotifyItemRemoved(roll->itemSlot);
                             roll->getLoot()->unlootedCount--;
                             player->StoreNewItem(dest, roll->itemid, true, item->randomPropertyId, item->GetAllowedLooters());
+
                             // @hearthwards-begin
                             const ItemTemplate* pProto = sObjectMgr->GetItemTemplate(item->itemid);
-                            player->GiveRestedXP(pProto->SellPrice * item->count, nullptr);
+                            const uint32 xp = pProto->SellPrice * item->count;
+
+                            if (Group* group = player->GetGroup())
+                            {
+                                const uint32 membersCount = group->GetMembersCount();
+
+                                for (GroupReference const* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+                                    if (Player* member = itr->GetSource())
+                                        if (member->IsAtGroupRewardDistance(player))
+                                            member->GiveRestedXP(xp / membersCount, nullptr);
+                            }
+                            else
+                            {
+                                player->GiveRestedXP(xp, nullptr);
+                            }
                             // @hearthwards-end
                         }
                         else
