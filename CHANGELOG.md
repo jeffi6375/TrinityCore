@@ -11,8 +11,8 @@ Hunt monsters, collect items, make fancy weapons and hats, hunt tougher monsters
 * Rested experience has been reimagined ✅
 * Flexible dungeons for 3-5 players and flexible raids for 6-10 players
 * Default UI has been tweaked and has advanced options to tweak it further
+* Hunt rares, elites and bosses to learn recipes and craft gear
 * New quests which spawn rares to hunt
-* Hunt rares, elites and bosses for crafted gear
 * New reputations and quests around these reputations that reward titles and items
 * Learn new languages so you can communicate with other factions
 
@@ -27,7 +27,8 @@ Hunt monsters, collect items, make fancy weapons and hats, hunt tougher monsters
 * Rested experience now accumulates as you kill monsters and loot items (1 copper = 1 XP) ✅
 * Rested experience becomes normal experience when you get back to a rested area ✅
 * Rested experience is lost on death ✅
-* Rested experience from looted items is shared ✅
+* Starting zones have a rested area ✅
+* Rested experience from monsters and items is shared ✅
 * Quests don't give experience ✅
 * Quests give a gold reward as if max level ✅
 
