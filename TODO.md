@@ -8,3 +8,7 @@
 * Edit DBC to make starting areas rested
 * Figure out why GiveRestedXP and GiveXP differ
 * Fix Continued MaNGOS loot tables
+* Sometimes XP doesn't drop when entering a rested area
+* Innkeepers give the hunting quests
+* Remove hearthstones
+* Fix low level zones because the loot isn't worth much

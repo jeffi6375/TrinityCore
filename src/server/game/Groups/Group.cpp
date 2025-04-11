@@ -1481,17 +1481,10 @@ void Group::EndRoll(Loot* pLoot, Map* allowedMap)
 // @hearthwards-begin
 void Group::GiveRestedXP(uint32 xp, const WorldObject *pRewardSource)
 {
-    uint32 count = 0;
-
     for (GroupReference const* itr = GetFirstMember(); itr != nullptr; itr = itr->next())
         if (Player* member = itr->GetSource())
             if (member->IsAtGroupRewardDistance(pRewardSource))
-                count++;
-
-    for (GroupReference const* itr = GetFirstMember(); itr != nullptr; itr = itr->next())
-        if (Player* member = itr->GetSource())
-            if (member->IsAtGroupRewardDistance(pRewardSource))
-                member->GiveRestedXP(xp / count, nullptr);
+                member->GiveRestedXP(xp, nullptr);
 }
 // @hearthwards-end
 
