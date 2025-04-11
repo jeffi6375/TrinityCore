@@ -24778,12 +24778,7 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
 
         if (Group* group = GetGroup())
         {
-            const uint32 membersCount = group->GetMembersCount();
-
-            for (GroupReference const* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
-                if (Player* member = itr->GetSource())
-                    if (member->IsAtGroupRewardDistance(this))
-                        member->GiveRestedXP(xp / membersCount, nullptr);
+            group->GiveRestedXP(xp, this);
         }
         else
         {

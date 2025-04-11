@@ -317,6 +317,9 @@ class TC_GAME_API Group
         void CountTheRoll(Rolls::iterator roll, Map* allowedMap);
         bool CountRollVote(ObjectGuid playerGUID, ObjectGuid Guid, uint8 Choise);
         void EndRoll(Loot* loot, Map* allowedMap);
+        // @hearthwards-begin
+        void GiveRestedXP(uint32 xp, const WorldObject *pRewardSource);
+        // @hearthwards-end
 
         // related to disenchant rolls
         void ResetMaxEnchantingLevel();

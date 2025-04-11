@@ -1478,6 +1478,23 @@ void Group::EndRoll(Loot* pLoot, Map* allowedMap)
     }
 }
 
+// @hearthwards-begin
+void Group::GiveRestedXP(uint32 xp, const WorldObject *pRewardSource)
+{
+    uint32 count = 0;
+
+    for (GroupReference const* itr = GetFirstMember(); itr != nullptr; itr = itr->next())
+        if (Player* member = itr->GetSource())
+            if (member->IsAtGroupRewardDistance(pRewardSource))
+                count++;
+
+    for (GroupReference const* itr = GetFirstMember(); itr != nullptr; itr = itr->next())
+        if (Player* member = itr->GetSource())
+            if (member->IsAtGroupRewardDistance(pRewardSource))
+                member->GiveRestedXP(xp / count, nullptr);
+}
+// @hearthwards-end
+
 void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
 {
     Roll* roll = *rollI;
@@ -1543,12 +1560,7 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
 
                         if (Group* group = player->GetGroup())
                         {
-                            const uint32 membersCount = group->GetMembersCount();
-
-                            for (GroupReference const* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
-                                if (Player* member = itr->GetSource())
-                                    if (member->IsAtGroupRewardDistance(player))
-                                        member->GiveRestedXP(xp / membersCount, nullptr);
+                            group->GiveRestedXP(xp, player);
                         }
                         else
                         {
@@ -1629,12 +1641,7 @@ void Group::CountTheRoll(Rolls::iterator rollI, Map* allowedMap)
 
                             if (Group* group = player->GetGroup())
                             {
-                                const uint32 membersCount = group->GetMembersCount();
-
-                                for (GroupReference const* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
-                                    if (Player* member = itr->GetSource())
-                                        if (member->IsAtGroupRewardDistance(player))
-                                            member->GiveRestedXP(xp / membersCount, nullptr);
+                                group->GiveRestedXP(xp, player);
                             }
                             else
                             {
