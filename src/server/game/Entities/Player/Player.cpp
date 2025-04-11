@@ -1125,7 +1125,7 @@ void Player::Update(uint32 p_time)
         }
     }
 
-    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING))
+    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING) || IsInStartingArea())
     {
         // @hearthwards-begin
         float xp = GetRestBonus();
@@ -26829,4 +26829,44 @@ std::string Player::GetDebugInfo() const
 GameClient* Player::GetGameClient() const
 {
     return GetSession()->GetGameClient();
+}
+
+bool Player::IsInStartingArea()
+{
+    Map* map = GetMap();
+    uint32 zoneId = GetZoneId();
+    uint32 areaId = GetAreaId();
+
+    if (map->GetId() == 0)  // Eastern Kingdoms
+    {
+        if (zoneId == 12 && areaId == 9)    // Human
+            return true;
+        
+        if (zoneId == 1 && areaId == 132)   // Dwarf & Gnome
+            return true;
+        
+        if (zoneId == 85 && areaId == 154)  // Undead
+            return true;
+    }
+    else if (map->GetId() == 1)
+    {
+        if (zoneId == 14 && areaId == 363)  // Orc & Troll
+            return true;
+
+        if (zoneId == 141 && areaId == 256) // Night Elf
+            return true;
+        
+        if (zoneId == 215 && areaId == 221) // Tauren
+            return true;
+    }
+    else if (map->GetId() == 530)
+    {
+        if (zoneId == 3430 && areaId == 3431)   // Blood Elf
+            return true;
+        
+        if (zoneId == 3524 && areaId == 3527)   // Draenei
+            return true;
+    }
+
+    return false;
 }

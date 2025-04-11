@@ -2519,6 +2519,10 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
 
         bool IsInstanceLoginGameMasterException() const;
 
+        // @hearthwards-begin
+        bool IsInStartingArea();
+        // @hearthwards-end
+
         MapReference m_mapRef;
 
         uint32 m_lastFallTime;
