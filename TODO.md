@@ -5,10 +5,13 @@
 * Starting area gives experience as well ✅
 * Convert group sharing of loot experience into a function ✅
 * Group sharing of loot experience should only count those in range ✅
-* Edit DBC to make starting areas rested
+* Max level 25
+* Max players for a raid should be capped at 10
+* Enable auction house bot
 * Figure out why GiveRestedXP and GiveXP differ
 * Fix Continued MaNGOS loot tables
 * Sometimes XP doesn't drop when entering a rested area
-* Innkeepers give the hunting quests
-* Remove hearthstones
-* Fix low level zones because the loot isn't worth much
+* Gold drops give experience
+* Add transmog
+* Milling and prospecting give levels
+* Instant mail

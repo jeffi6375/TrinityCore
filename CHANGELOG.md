@@ -4,15 +4,12 @@
 > The more of the following a campaign has, the more old school it is: high lethality, an open world, a lack of pre-written plot, an emphasis on creative problem solving, an exploration-centered reward system (usually XP for treasure), a disregard for "encounter balance", and the use of random tables to generate world elements that surprise both players and referees. Also, a strong do-it-yourself attitude and a willingness to share your work and use the creativity of others in your game.
 
 ## What is this?
-Hunt monsters, collect items, make fancy weapons and hats, hunt tougher monsters.
-
-* Cross faction role playing realm with an emphasis on cooperation ✅
+* Cross faction role playing realm ✅
 * Levels don't improve your character as much ✅
 * Experience has been reimagined ✅
-* Flexible dungeons for 3-5 players and flexible raids for 6-10 players
-* Addon which tweaks the default UI and has advanced options to tweak it further
-* New quests which spawn rares to hunt
-* Loot tables are more blizzlike using Wowhead
+* Flexible dungeons for 3-5 players and flexible raids for 6+ players
+* Addon which tweaks the default UI and has options to tweak it further
+* Rares have been improved
 
 ## Changes to World of Warcraft
 * Learn all professions
@@ -31,10 +28,12 @@ Hunt monsters, collect items, make fancy weapons and hats, hunt tougher monsters
 * Experience isn't reduced when in a group
 
 ## Ideas
-* Hunt rares, elites and bosses to learn recipes and craft gear
-* Game Master run events to change the world with the players
-* Players can create NPCs, quests and items at a cost
+* Loot tables are more blizzlike using Wowhead
+* Dungeons and raids are more blizzlike and scaled for smaller parties and raids
 * Gear doesn't use rating but percentages to help make old raids relevant
-* Retainers who you can find in the world that can help you on your adventure
+* Game masters run events to change the world with the players
+* You can find retainers at inns that can help you on your adventure
+* Hunt rares, elites and bosses to learn recipes and craft gear
+* Players can create NPCs, quests and items at a cost
 * New reputations and quests around these reputations that reward titles and items
 * Learn new languages so you can communicate with other factions
