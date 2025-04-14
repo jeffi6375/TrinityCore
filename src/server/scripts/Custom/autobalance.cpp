@@ -44,11 +44,6 @@ public:
             return damage;
         }
 
-        if (attacker->IsCreature() && !attacker->ToCreature()->isElite())
-        {
-            return damage;
-        }
-
         InstanceMap* instanceMap = ((InstanceMap*)sMapMgr->FindMap(attacker->GetMapId(), attacker->GetInstanceId()));
         float multiplier = instanceMap->GetOffensiveMultiplier();
 
@@ -78,11 +73,6 @@ public:
         }
 
         if ((healer->IsHunterPet() || healer->IsPet() || healer->IsSummon()) && healer->IsControlledByPlayer())
-        {
-            return heal;
-        }
-
-        if (healer->IsCreature() && !healer->ToCreature()->isElite())
         {
             return heal;
         }
