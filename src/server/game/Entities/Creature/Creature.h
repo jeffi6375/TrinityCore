@@ -437,6 +437,11 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
         void ForcedDespawn(uint32 timeMSToDespawn = 0, Seconds forceRespawnTimer = 0s);
         bool CheckNoGrayAggroConfig(uint32 playerLevel, uint32 creatureLevel) const; // No aggro from gray creatures
 
+        // @hearthwards-begin
+        void ModifyAttributes();
+        float m_previousDefensiveMultiplier = 1.0f;
+        // @hearthwards-end
+
         // Waypoint path
         uint32 _waypointPathId;
         std::pair<uint32/*nodeId*/, uint32/*pathId*/> _currentWaypointNodeInfo;

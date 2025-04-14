@@ -661,6 +661,64 @@ void Creature::SetPhaseMask(uint32 newPhaseMask, bool update)
         UpdateObjectVisibility();
 }
 
+// @hearthwards-begin
+void Creature::ModifyAttributes()
+{
+    if (!GetMap() || !GetMap()->IsDungeon())
+        return;
+    
+    if (((IsHunterPet() || IsPet() || IsSummon()) && IsControlledByPlayer()))
+        return;
+
+    InstanceMap* instanceMap = ((InstanceMap*)sMapMgr->FindMap(GetMapId(), GetInstanceId()));
+    float multiplier = instanceMap->GetDefensiveMultiplier();
+    CreatureTemplate const* creatureTemplate = GetCreatureTemplate();
+    CreatureBaseStats const* creatureStats = sObjectMgr->GetCreatureBaseStats(GetLevel(), creatureTemplate->unit_class);
+    uint32 baseHealth = creatureStats->GenerateHealth(creatureTemplate);
+    uint32 baseMana = creatureStats->GenerateMana(creatureTemplate);
+    uint32 scaledHealth = std::max<float>(1.0f, baseHealth * multiplier);
+    uint32 scaledMana = std::max<float>(baseMana ? 1.0f : 0.0f, baseMana * multiplier);
+
+    uint32 prevMaxHealth = GetMaxHealth();
+    uint32 prevMaxPower = GetMaxPower(POWER_MANA);
+    uint32 prevHealth = GetHealth();
+    uint32 prevPower = GetPower(POWER_MANA);
+    Powers pType = GetPowerType();
+
+    SetCreateHealth(scaledHealth);
+    SetMaxHealth(scaledHealth);
+    ResetPlayerDamageReq();
+    SetCreateMana(scaledMana);
+    SetMaxPower(POWER_MANA, scaledMana);
+    SetStatFlatModifier(UNIT_MOD_ENERGY, BASE_VALUE, (float)100.0f);
+    SetStatFlatModifier(UNIT_MOD_RAGE, BASE_VALUE, (float)100.0f);
+    SetStatFlatModifier(UNIT_MOD_HEALTH, BASE_VALUE, (float)scaledHealth);
+    SetStatFlatModifier(UNIT_MOD_MANA, BASE_VALUE, (float)scaledMana);
+
+    uint32 scaledCurHealth = (prevHealth && prevMaxHealth) ? std::max<uint32>(uint32(float(scaledHealth) / float(prevMaxHealth) * float(prevHealth)), 1) : 0;
+    uint32 scaledCurPower = (prevPower && prevMaxPower) ? std::max<uint32>(uint32(float(scaledMana) / float(prevMaxPower) * float(prevPower)), 1) : 0;
+
+    if (m_previousDefensiveMultiplier == multiplier)
+        return;
+
+    SetHealth(scaledCurHealth);
+
+    if (pType == POWER_MANA)
+    {
+        SetPower(POWER_MANA, scaledCurPower);
+    }
+    else
+    {
+        // fix creatures with different power types
+        SetPowerType(pType);
+    }
+
+    UpdateAllStats();
+
+    m_previousDefensiveMultiplier = multiplier;
+}
+// @hearthwards-end
+
 void Creature::Update(uint32 diff)
 {
     if (IsAIEnabled() && m_triggerJustAppeared && m_deathState != DEAD)
@@ -869,6 +927,10 @@ void Creature::Update(uint32 diff)
         default:
             break;
     }
+
+    // @hearthwards-begin
+    ModifyAttributes();
+    // @hearthwards-end
 }
 
 void Creature::Regenerate(Powers power)

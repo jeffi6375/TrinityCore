@@ -3880,6 +3880,37 @@ Map::EnterState InstanceMap::CannotEnter(Player* player)
     return Map::CannotEnter(player);
 }
 
+// @hearthwards-begin
+void InstanceMap::CalculateCreatureMultipliers(uint32 playersCount)
+{
+    m_offensiveMultiplier = 1.0f;
+    m_defensiveMultiplier = 1.0f;
+
+    if (IsDungeon())
+    {
+        uint32 minPlayers = 1;
+        uint32 maxPlayers = GetMaxPlayers();
+        uint32 tanksCount = 1;
+        uint32 healersCount = uint32(maxPlayers / 5.0f);
+
+        if (IsRaid())
+        {
+            minPlayers = 6;
+            tanksCount = 2;
+        }
+
+        uint32 defensivePlayers = tanksCount + healersCount;
+        float offensiveUnit = 1.0f / defensivePlayers;
+        uint32 offensivePlayers = maxPlayers - defensivePlayers;
+        float defensiveUnit = 1.0f / offensivePlayers;
+
+        playersCount = std::max(minPlayers, playersCount);
+        m_offensiveMultiplier = offensiveUnit + (1 - offensiveUnit) / (maxPlayers - 1) * (playersCount - 1);
+        m_defensiveMultiplier = defensiveUnit + (1 - defensiveUnit) / (maxPlayers - 1) * (playersCount - 1);
+    }
+}
+// @hearthwards-end
+
 /*
     Do map specific checks and add the player to the map if successful.
 */
@@ -3994,6 +4025,10 @@ bool InstanceMap::AddPlayerToMap(Player* player)
     // this will acquire the same mutex so it cannot be in the previous block
     Map::AddPlayerToMap(player);
 
+    // @hearthwards-begin
+    CalculateCreatureMultipliers(GetPlayersCountExceptGMs());
+    // @hearthwards-end
+
     if (i_data)
         i_data->OnPlayerEnter(player);
 
@@ -4020,6 +4055,10 @@ void InstanceMap::RemovePlayerFromMap(Player* player, bool remove)
         m_unloadTimer = m_unloadWhenEmpty ? MIN_UNLOAD_DELAY : std::max(sWorld->getIntConfig(CONFIG_INSTANCE_UNLOAD_DELAY), (uint32)MIN_UNLOAD_DELAY);
 
     Map::RemovePlayerFromMap(player, remove);
+
+    // @hearthwards-begin
+    CalculateCreatureMultipliers(GetPlayersCountExceptGMs() - 1);
+    // @hearthwards-end
 
     // for normal instances schedule the reset after all players have left
     SetResetSchedule(true);

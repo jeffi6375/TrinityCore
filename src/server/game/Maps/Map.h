@@ -903,12 +903,26 @@ class TC_GAME_API InstanceMap : public Map
         virtual void InitVisibilityDistance() override;
 
         std::string GetDebugInfo() const override;
+
+        // @hearthwards-begin
+        void CalculateCreatureMultipliers(uint32 playersCount);
+        // How much damage creatures should do on this map
+        float GetOffensiveMultiplier() const { return m_offensiveMultiplier; }
+        // How much health, mana and healing creatures should have on this map
+        float GetDefensiveMultiplier() const { return m_defensiveMultiplier; }
+        // @hearthwards-end
+
     private:
         bool m_resetAfterUnload;
         bool m_unloadWhenEmpty;
         InstanceScript* i_data;
         uint32 i_script_id;
         TeamId i_script_team;
+
+        // @hearthwards-begin
+        float m_offensiveMultiplier = 1.0f;
+        float m_defensiveMultiplier = 1.0f;
+        // @hearthwards-end
 };
 
 class TC_GAME_API BattlegroundMap : public Map
