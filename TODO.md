@@ -15,3 +15,4 @@
 * Add transmog
 * Milling and prospecting give levels
 * Instant mail
+* Draenei Call of Water quests give too much gold

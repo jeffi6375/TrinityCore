@@ -399,6 +399,14 @@ class TC_GAME_API UnitScript : public ScriptObject
 
         // Called when Spell Damage is being Dealt
         virtual void ModifySpellDamageTaken(Unit* target, Unit* attacker, int32& damage);
+
+        // @hearthwards-begin
+        // Called when Healing is Received
+        virtual void ModifyHealReceived(Unit* target, Unit* healer, uint32& heal);
+
+        // Called when HoT's Tick Heal is being Received
+        virtual void ModifyPeriodicHealAurasTick(Unit* target, Unit* healer, uint32& heal);
+        // @hearthwards-end
 };
 
 class TC_GAME_API CreatureScript : public ScriptObject
@@ -1077,6 +1085,10 @@ class TC_GAME_API ScriptMgr
         void ModifyPeriodicDamageAurasTick(Unit* target, Unit* attacker, uint32& damage);
         void ModifyMeleeDamage(Unit* target, Unit* attacker, uint32& damage);
         void ModifySpellDamageTaken(Unit* target, Unit* attacker, int32& damage);
+        // @hearthwards-begin
+        void ModifyHealReceived(Unit* target, Unit* healer, uint32& heal);
+        void ModifyPeriodicHealAurasTick(Unit* target, Unit* healer, uint32& heal);
+        // @hearthwards-end
 
     private:
         uint32 _scriptCount;

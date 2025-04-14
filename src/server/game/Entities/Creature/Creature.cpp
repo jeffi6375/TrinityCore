@@ -670,6 +670,9 @@ void Creature::ModifyAttributes()
     if (((IsHunterPet() || IsPet() || IsSummon()) && IsControlledByPlayer()))
         return;
 
+    if (!isElite())
+        return;
+
     InstanceMap* instanceMap = ((InstanceMap*)sMapMgr->FindMap(GetMapId(), GetInstanceId()));
     float multiplier = instanceMap->GetDefensiveMultiplier();
     CreatureTemplate const* creatureTemplate = GetCreatureTemplate();

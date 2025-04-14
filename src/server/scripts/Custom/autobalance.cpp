@@ -1,9 +1,9 @@
+// @hearthwards-begin
 #include "ScriptMgr.h"
 #include "Unit.h"
 #include "Map.h"
 #include "MapManager.h"
-#include "Player.h"
-#include "Chat.h"
+#include "Creature.h"
 
 class AutoBalance_UnitScript : public UnitScript
 {
@@ -44,10 +44,53 @@ public:
             return damage;
         }
 
+        if (attacker->IsCreature() && !attacker->ToCreature()->isElite())
+        {
+            return damage;
+        }
+
         InstanceMap* instanceMap = ((InstanceMap*)sMapMgr->FindMap(attacker->GetMapId(), attacker->GetInstanceId()));
         float multiplier = instanceMap->GetOffensiveMultiplier();
 
         return damage * multiplier;
+    }
+
+    void ModifyHealReceived(Unit* target, Unit* healer, uint32& heal) override
+    {
+        heal = ModifyHeal(target, healer, heal);
+    }
+
+    void ModifyPeriodicHealAurasTick(Unit *target, Unit *healer, uint32 &heal) override
+    {
+        heal = ModifyHeal(target, healer, heal);
+    }
+
+    uint32 ModifyHeal(Unit *target, Unit *healer, uint32 heal)
+    {
+        if (!healer || healer->GetTypeId() == TYPEID_PLAYER || !healer->IsInWorld())
+        {
+            return heal;
+        }
+
+        if (!(target && target->GetMap() && target->GetMap()->IsDungeon()) || !(healer->GetMap() && healer->GetMap()->IsDungeon()))
+        {
+            return heal;
+        }
+
+        if ((healer->IsHunterPet() || healer->IsPet() || healer->IsSummon()) && healer->IsControlledByPlayer())
+        {
+            return heal;
+        }
+
+        if (healer->IsCreature() && !healer->ToCreature()->isElite())
+        {
+            return heal;
+        }
+
+        InstanceMap* instanceMap = ((InstanceMap*)sMapMgr->FindMap(healer->GetMapId(), healer->GetInstanceId()));
+        float multiplier = instanceMap->GetDefensiveMultiplier();
+
+        return heal * multiplier;
     }
 };
 
@@ -55,3 +98,4 @@ void AddSC_AutoBalance()
 {
     new AutoBalance_UnitScript;
 }
+// @hearthwards-end

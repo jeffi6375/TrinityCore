@@ -486,6 +486,9 @@ class TC_GAME_API HealInfo
 
         void AbsorbHeal(uint32 amount);
         void SetEffectiveHeal(uint32 amount) { _effectiveHeal = amount; }
+        // @hearthwards-begin
+        void SetHeal(uint32 amount) { _heal = amount; }
+        // @hearthwards-end
 
         Unit* GetHealer() const { return _healer; }
         Unit* GetTarget() const { return _target; }

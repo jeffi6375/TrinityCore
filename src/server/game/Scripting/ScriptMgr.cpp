@@ -2128,6 +2128,18 @@ void ScriptMgr::ModifySpellDamageTaken(Unit* target, Unit* attacker, int32& dama
     FOREACH_SCRIPT(UnitScript)->ModifySpellDamageTaken(target, attacker, damage);
 }
 
+// @hearthwards-begin
+void ScriptMgr::ModifyHealReceived(Unit* target, Unit* healer, uint32& heal)
+{
+    FOREACH_SCRIPT(UnitScript)->ModifyHealReceived(target, healer, heal);
+}
+
+void ScriptMgr::ModifyPeriodicHealAurasTick(Unit* target, Unit* healer, uint32& heal)
+{
+    FOREACH_SCRIPT(UnitScript)->ModifyPeriodicHealAurasTick(target, healer, heal);
+}
+// @hearthwards-end
+
 SpellScriptLoader::SpellScriptLoader(char const* name)
     : ScriptObject(name)
 {
@@ -2383,6 +2395,16 @@ void UnitScript::ModifyMeleeDamage(Unit* /*target*/, Unit* /*attacker*/, uint32&
 void UnitScript::ModifySpellDamageTaken(Unit* /*target*/, Unit* /*attacker*/, int32& /*damage*/)
 {
 }
+
+// @hearthwards-begin
+void UnitScript::ModifyHealReceived(Unit* /*target*/, Unit* /*healer*/, uint32& /*heal*/)
+{
+}
+
+void UnitScript::ModifyPeriodicHealAurasTick(Unit* /*target*/, Unit* /*healer*/, uint32& /*heal*/)
+{
+}
+// @hearthwards-end
 
 CreatureScript::CreatureScript(char const* name)
     : ScriptObject(name)

@@ -6416,6 +6416,13 @@ void Unit::SendHealSpellLog(HealInfo& healInfo, bool critical /*= false*/)
 int32 Unit::HealBySpell(HealInfo& healInfo, bool critical /*= false*/)
 {
     // calculate heal absorb and reduce healing
+    // @hearthwards-begin
+    Unit* target = healInfo.GetTarget();
+    Unit* healer = healInfo.GetHealer();
+    uint32 heal = healInfo.GetHeal();
+    sScriptMgr->ModifyHealReceived(target, healer, heal);
+    healInfo.SetHeal(heal);
+    // @hearthwards-end
     Unit::CalcHealAbsorb(healInfo);
     Unit::DealHeal(healInfo);
     SendHealSpellLog(healInfo, critical);

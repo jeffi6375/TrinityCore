@@ -17,6 +17,7 @@
 
 // This is where scripts' loading functions should be declared:
 
+// @hearthwards-begin
 void AddSC_AutoBalance();
 
 // The name of this function should match:
@@ -25,3 +26,4 @@ void AddCustomScripts()
 {
     AddSC_AutoBalance();
 }
+// @hearthwards-end
