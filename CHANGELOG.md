@@ -1,15 +1,12 @@
 # Changelog
-*Based on Monster Hunter and Dungeons & Dragons*
-
 > The more of the following a campaign has, the more old school it is: high lethality, an open world, a lack of pre-written plot, an emphasis on creative problem solving, an exploration-centered reward system (usually XP for treasure), a disregard for "encounter balance", and the use of random tables to generate world elements that surprise both players and referees. Also, a strong do-it-yourself attitude and a willingness to share your work and use the creativity of others in your game.
 
 ## What is this?
 * Cross faction role playing realm ✅
 * Levels don't improve your character as much ✅
 * Experience has been reimagined ✅
-* Flexible dungeons for 3-5 players and flexible raids for 6+ players
+* Flexible dungeons for 3-5 players and flexible raids for 6+ players ✅
 * Addon which tweaks the default UI and has options to tweak it further
-* Rares have been improved
 
 ## Changes to World of Warcraft
 * Learn all professions
@@ -24,10 +21,16 @@
 * Rested experience is lost on death
 * Starting zones act like a rested area
 * Quests don't give experience
+* Exploration doesn't give experience
 * Quests give a gold reward as if max level
 * Experience isn't reduced when in a group
+* Health, mana, damage and healing of creatures in instances now scale to the number of players
+* Max level is 25
+* Only one signature required to start a guild
+* Prospecting and milling give skill increases
 
 ## Ideas
+* A new activity in hunting rares
 * Loot tables are more blizzlike using Wowhead
 * Dungeons and raids are more blizzlike and scaled for smaller parties and raids
 * Gear doesn't use rating but percentages to help make old raids relevant

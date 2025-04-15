@@ -5,8 +5,6 @@
 * Starting area gives experience as well ✅
 * Convert group sharing of loot experience into a function ✅
 * Group sharing of loot experience should only count those in range ✅
-* Max level 25
-* Max players for a raid should be capped at 10
 * Enable auction house bot
 * Figure out why GiveRestedXP and GiveXP differ
 * Fix Continued MaNGOS loot tables
@@ -15,4 +13,11 @@
 * Add transmog
 * Milling and prospecting give levels
 * Instant mail
-* Draenei Call of Water quests give too much gold
+* Use phases similar to Season of Discovery (See [Classic: Season of Discovery - Warcraft Wiki](https://warcraft.wiki.gg/wiki/World_of_Warcraft_Classic:_Season_of_Discovery))
+* Fix gold rewards from quests like Draenei's Call of Water questline
+* Disenchant rolls should give experience
+* Create a tool to scrape Wowhead
+* Fix loot tables using Wowhead data
+* Normalize dungeon boss damage multipliers
+* Nodes should be linked so they don't all spawn at once
+* Scale creatures in battlegrounds to the number of players
