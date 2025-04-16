@@ -7,17 +7,16 @@
 * Group sharing of loot experience should only count those in range ✅
 * Enable auction house bot
 * Figure out why GiveRestedXP and GiveXP differ
-* Fix Continued MaNGOS loot tables
+* Remove Plans: Copper Chain Vest (3609) from Siltfin Murlocs (17190) and add plans reference loot table (24700) ✅
+* Class and event quests give a lot of gold at low level
 * Sometimes XP doesn't drop when entering a rested area
 * Gold drops give experience
 * Add transmog
-* Milling and prospecting give levels
-* Instant mail
+* Milling and prospecting give levels ✅
+* Instant mail ✅
 * Use phases similar to Season of Discovery (See [Classic: Season of Discovery - Warcraft Wiki](https://warcraft.wiki.gg/wiki/World_of_Warcraft_Classic:_Season_of_Discovery))
-* Fix gold rewards from quests like Draenei's Call of Water questline
+* Fix too many mining nodes in Westfall mines
 * Disenchant rolls should give experience
-* Create a tool to scrape Wowhead
-* Fix loot tables using Wowhead data
-* Normalize dungeon boss damage multipliers
-* Nodes should be linked so they don't all spawn at once
 * Scale creatures in battlegrounds to the number of players
+* Add health and damage buff to Death Knight starting area
+* Put config values for each feature

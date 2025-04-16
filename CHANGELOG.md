@@ -24,8 +24,8 @@
 * Exploration doesn't give experience
 * Quests give a gold reward as if max level
 * Experience isn't reduced when in a group
-* Health, mana, damage and healing of creatures in instances now scale to the number of players
-* Max level is 25
+* Health, mana, damage and healing of creatures in instances now scales to the number of players
+* Max level is 25, then 40, 50, 60, 70 and 80
 * Only one signature required to start a guild
 * Prospecting and milling give skill increases
 
