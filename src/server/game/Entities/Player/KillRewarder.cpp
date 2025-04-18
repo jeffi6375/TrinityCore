@@ -196,9 +196,9 @@ void KillRewarder::_RewardPlayer(Player* player, bool isDungeon)
     // Give reputation and kill credit only in PvE.
     if (!_isPvP || _isBattleGround)
     {
-        // @hearthwards-begin
-        float const rate = 1.0f;
-        // @hearthwards-end
+        float const rate = _group ?
+            _groupRate * float(player->GetLevel()) / _sumLevel : // Group rate depends on summary level.
+            1.0f;                                                // Personal rate is 100%
         if (_xp)
             // 4.2. Give XP.
             _RewardXP(player, rate);

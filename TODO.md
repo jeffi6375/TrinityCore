@@ -19,6 +19,6 @@
 * Scale creatures in battlegrounds to the number of players
 * Add health and damage buff to Death Knight starting area
 * Put config values for each feature
-* Scale experience in a group
+* Scale experience in a group ✅
 * Creatures should move forward slowly in the Naralex event
 * Disable gold rewards for quests without a level ✅
