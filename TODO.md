@@ -8,7 +8,6 @@
 * Enable auction house bot
 * Figure out why GiveRestedXP and GiveXP differ
 * Remove Plans: Copper Chain Vest (3609) from Siltfin Murlocs (17190) and add plans reference loot table (24700) ✅
-* Class and event quests give a lot of gold at low level
 * Sometimes XP doesn't drop when entering a rested area
 * Gold drops give experience
 * Add transmog
@@ -20,3 +19,6 @@
 * Scale creatures in battlegrounds to the number of players
 * Add health and damage buff to Death Knight starting area
 * Put config values for each feature
+* Scale experience in a group
+* Creatures should move forward slowly in the Naralex event
+* Disable gold rewards for quests without a level ✅

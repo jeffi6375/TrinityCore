@@ -291,8 +291,12 @@ int32 Quest::GetRewOrReqMoney(Player const* player) const
     // RequiredMoney: the amount is the negative copper sum.
     if (_rewardMoney < 0)
         return _rewardMoney;
-
+    
     // @hearthwards-begin
+    // Quests without a level should reward no gold
+    if (GetQuestLevel() == -1)
+        return 0;
+
     // RewardMoney: the positive amount
     return std::max(int32(GetRewMoneyMaxLevel()), int32(_rewardMoney * sWorld->getRate(RATE_MONEY_QUEST)));
     // @hearthwards-end

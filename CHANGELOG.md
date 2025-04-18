@@ -22,8 +22,7 @@
 * Starting zones act like a rested area
 * Quests don't give experience
 * Exploration doesn't give experience
-* Quests give a gold reward as if max level
-* Experience isn't reduced when in a group
+* Quests give a gold reward as if max level unless they don't have a level
 * Health, mana, damage and healing of creatures in instances now scales to the number of players
 * Max level is 25, then 40, 50, 60, 70 and 80
 * Only one signature required to start a guild
@@ -31,8 +30,6 @@
 
 ## Ideas
 * A new activity in hunting rares
-* Loot tables are more blizzlike using Wowhead
-* Dungeons and raids are more blizzlike and scaled for smaller parties and raids
 * Gear doesn't use rating but percentages to help make old raids relevant
 * Game masters run events to change the world with the players
 * You can find retainers at inns that can help you on your adventure
