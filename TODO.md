@@ -22,3 +22,9 @@
 * Scale experience in a group ✅
 * Creatures should move forward slowly in the Naralex event
 * Disable gold rewards for quests without a level ✅
+* No herbing and mining trainer in Bloodhoof Village
+* Lack of quests in Tauren starting area
+* Kyle's Gone Missing! is bugged sometimes
+* Mark of the Wild cancels scrolls
+* Some class quests are still showing a gold reward
+* Mail across factions
