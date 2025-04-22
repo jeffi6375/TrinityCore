@@ -9,7 +9,7 @@
 * Figure out why GiveRestedXP and GiveXP differ
 * Remove Plans: Copper Chain Vest (3609) from Siltfin Murlocs (17190) and add plans reference loot table (24700) ✅
 * Sometimes XP doesn't drop when entering a rested area
-* Gold drops give experience
+* Gold drops give experience ✅
 * Add transmog
 * Milling and prospecting give levels ✅
 * Instant mail ✅

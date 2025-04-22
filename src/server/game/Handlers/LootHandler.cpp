@@ -30,6 +30,7 @@
 #include "ObjectAccessor.h"
 #include "Player.h"
 #include "WorldPacket.h"
+#include <MapManager.h>
 
 void WorldSession::HandleAutostoreLootItemOpcode(WorldPacket& recvData)
 {
@@ -164,6 +165,17 @@ void WorldSession::HandleLootMoneyOpcode(WorldPacket& /*recvData*/)
 
     if (loot)
     {
+        // @hearthwards-begin
+        uint32 minPlayers = 1;
+        uint32 maxPlayers = 0;
+
+        if (player->GetMap() && player->GetMap()->IsDungeon())
+        {
+            InstanceMap* instanceMap = ((InstanceMap*)sMapMgr->FindMap(player->GetMapId(), player->GetInstanceId()));
+            minPlayers = instanceMap->GetMinPlayers();
+            maxPlayers = instanceMap->GetMaxPlayers();
+        }
+
         loot->NotifyMoneyRemoved();
         if (shareMoney && player->GetGroup())      //item, pickpocket and players can be looted only single player
         {
@@ -180,11 +192,20 @@ void WorldSession::HandleLootMoneyOpcode(WorldPacket& /*recvData*/)
                     playersNear.push_back(member);
             }
 
-            uint32 goldPerPlayer = uint32((loot->gold) / (playersNear.size()));
+            uint32 count = std::max(uint32(playersNear.size()), minPlayers);
+            uint32 gold = loot->gold;
+
+            if (maxPlayers)
+            {
+                gold = gold * count / maxPlayers;
+            }
+
+            uint32 goldPerPlayer = uint32(gold / count);
 
             for (std::vector<Player*>::const_iterator i = playersNear.begin(); i != playersNear.end(); ++i)
             {
                 (*i)->ModifyMoney(goldPerPlayer);
+                (*i)->GiveRestedXP(gold, nullptr);
                 (*i)->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_MONEY, goldPerPlayer);
 
                 WorldPacket data(SMSG_LOOT_MONEY_NOTIFY, 4 + 1);
@@ -195,14 +216,24 @@ void WorldSession::HandleLootMoneyOpcode(WorldPacket& /*recvData*/)
         }
         else
         {
-            player->ModifyMoney(loot->gold);
-            player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_MONEY, loot->gold);
+            uint32 gold = loot->gold;
+
+            if (maxPlayers)
+            {
+                gold = gold * minPlayers / maxPlayers;
+            }
+
+            gold = gold / minPlayers;
+            player->ModifyMoney(gold);
+            player->GiveRestedXP(gold, nullptr);
+            player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_MONEY, gold);
 
             WorldPacket data(SMSG_LOOT_MONEY_NOTIFY, 4 + 1);
-            data << uint32(loot->gold);
+            data << uint32(gold);
             data << uint8(1);   // "You loot..."
             SendPacket(&data);
         }
+        // @hearthwards-end
 
         loot->gold = 0;
 

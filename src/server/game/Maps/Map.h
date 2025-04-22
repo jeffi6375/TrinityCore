@@ -906,6 +906,8 @@ class TC_GAME_API InstanceMap : public Map
 
         // @hearthwards-begin
         void CalculateCreatureMultipliers(uint32 playersCount);
+        // Minimum players for map
+        uint32 GetMinPlayers() const;
         // How much damage creatures should do on this map
         float GetOffensiveMultiplier() const { return m_offensiveMultiplier; }
         // How much health, mana and healing creatures should have on this map

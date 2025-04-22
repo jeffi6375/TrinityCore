@@ -3881,6 +3881,23 @@ Map::EnterState InstanceMap::CannotEnter(Player* player)
 }
 
 // @hearthwards-begin
+uint32 InstanceMap::GetMinPlayers() const
+{
+    uint32 minPlayers = 1;
+
+    if (IsDungeon())
+    {
+        minPlayers = 3;
+
+        if (IsRaid())
+        {
+            minPlayers = 6;
+        }
+    }
+
+    return minPlayers;
+}
+
 void InstanceMap::CalculateCreatureMultipliers(uint32 playersCount)
 {
     m_offensiveMultiplier = 1.0f;
@@ -3888,15 +3905,14 @@ void InstanceMap::CalculateCreatureMultipliers(uint32 playersCount)
 
     if (IsDungeon())
     {
-        uint32 minPlayers = 1;
+        uint32 minPlayers = GetMinPlayers();
         uint32 maxPlayers = GetMaxPlayers();
         uint32 tanksCount = 1;
         uint32 healersCount = uint32(maxPlayers / 5.0f);
 
         if (IsRaid())
         {
-            minPlayers = 6;
-            tanksCount = 2;
+            tanksCount = std::max(2u, uint32(maxPlayers / 10.0f));
         }
 
         uint32 defensivePlayers = tanksCount + healersCount;
