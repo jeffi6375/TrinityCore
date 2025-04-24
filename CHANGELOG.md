@@ -16,10 +16,10 @@
 * Base hit points significantly reduced
 * Spell hit chance scales like melee (5% miss chance + 1% per level)
 * You don't gain normal experience from killing monsters
-* Rested experience now accumulates as you kill monsters and loot items (1 copper = 1 XP)
+* Rested experience now accumulates as you kill monsters, loot gold and loot items (1 copper = 1 XP)
 * Rested experience becomes normal experience when you get back to a rested area
 * Rested experience is lost on death
-* Starting zones act like a rested area
+* Starting areas act like a rested area
 * Quests don't give experience
 * Exploration doesn't give experience
 * Quests give a gold reward as if max level unless they don't have a level
@@ -27,6 +27,7 @@
 * Max level is 25, then 40, 50, 60, 70 and 80
 * Only one signature required to start a guild
 * Prospecting and milling give skill increases
+* Corpse decay time of looted corpses is the same as non-looted
 
 ## Ideas
 * A new activity in hunting rares
