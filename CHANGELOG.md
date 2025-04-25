@@ -6,6 +6,7 @@
 * Levels don't improve your character as much ✅
 * Experience has been reimagined ✅
 * Flexible dungeons for 3-5 players and flexible raids for 6+ players ✅
+* Rares and rare elites have been improved
 * Addon which tweaks the default UI and has options to tweak it further
 
 ## Changes to World of Warcraft
@@ -30,10 +31,9 @@
 * Corpse decay time of looted corpses is the same as non-looted
 
 ## Ideas
-* A new activity in hunting rares
-* Gear doesn't use rating but percentages to help make old raids relevant
 * Game masters run events to change the world with the players
 * You can find retainers at inns that can help you on your adventure
+* Gear doesn't use rating but percentages to help make old raids relevant
 * Hunt rares, elites and bosses to learn recipes and craft gear
 * Players can create NPCs, quests and items at a cost
 * New reputations and quests around these reputations that reward titles and items
