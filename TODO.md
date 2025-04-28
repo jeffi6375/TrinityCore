@@ -35,3 +35,7 @@
 * Rare elites are like bosses and always drop a blue item ❗
 * Dungeon boss damage like Sneed's feels high ✅
 * Scale permanent pet base HP as 5 times their level ✅
+* RDF for one of each role
+* Last boss of SFK resets if losing los on top threat
+* Blizzlike damage to nudge towards a tank and healer
+* Improve loot tables

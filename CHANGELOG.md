@@ -9,7 +9,7 @@
 * Rares and rare elites have been improved
 * Addon which tweaks the default UI and has options to tweak it further
 
-## Changes to World of Warcraft
+## Changes to Wrath
 * Learn all professions
 * Allow tracking both herbs and minerals
 * Respecs have no cost
