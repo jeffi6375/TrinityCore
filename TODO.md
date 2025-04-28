@@ -33,4 +33,5 @@
 * Murk Deep quest doesn't have the mobs spawning and running from the ocean
 * Rares and rare elites always drop a green item with a random suffix ❗
 * Rare elites are like bosses and always drop a blue item ❗
-* Dungeon boss damage like Sneed's feels high
+* Dungeon boss damage like Sneed's feels high ✅
+* Scale permanent pet base HP as 5 times their level ✅

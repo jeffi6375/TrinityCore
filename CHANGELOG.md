@@ -13,8 +13,8 @@
 * Learn all professions
 * Allow tracking both herbs and minerals
 * Respecs have no cost
-* Stats don't increase on level up
-* Base hit points significantly reduced
+* Player stats don't increase on level up
+* Player and pet base hit points significantly reduced
 * Spell hit chance scales like melee (5% miss chance + 1% per level)
 * You don't gain normal experience from killing monsters
 * Rested experience now accumulates as you kill monsters, loot gold and loot items (1 copper = 1 XP)
