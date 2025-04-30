@@ -3920,9 +3920,17 @@ void InstanceMap::CalculateCreatureMultipliers(uint32 playersCount)
         uint32 offensivePlayers = maxPlayers - defensivePlayers;
         float defensiveUnit = 1.0f / offensivePlayers;
 
-        playersCount = std::max(minPlayers, playersCount);
-        m_offensiveMultiplier = offensiveUnit + (1 - offensiveUnit) / (maxPlayers - 1) * (playersCount - 1);
-        m_defensiveMultiplier = defensiveUnit + (1 - defensiveUnit) / (maxPlayers - 1) * (playersCount - 1);
+        uint32 defensivePlayersCount = std::max(5u, playersCount);
+
+        if (IsRaid())
+        {
+            defensivePlayersCount = std::max(10u, playersCount);
+        }
+
+        uint32 offensivePlayersCount = std::max(minPlayers, playersCount);
+
+        m_offensiveMultiplier = offensiveUnit + (1 - offensiveUnit) / (maxPlayers - 1) * (defensivePlayersCount - 1);
+        m_defensiveMultiplier = defensiveUnit + (1 - defensiveUnit) / (maxPlayers - 1) * (offensivePlayersCount - 1);
     }
 }
 // @hearthwards-end
