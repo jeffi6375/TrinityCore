@@ -39,3 +39,5 @@
 * Last boss of SFK resets if losing los on top threat
 * Blizzlike damage to nudge towards a tank and healer ✅
 * Improve loot tables
+* Archmage Arugal is evading a lot ✅
+* Prevent extra XP past max level

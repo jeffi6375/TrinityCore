@@ -264,7 +264,7 @@ class boss_archmage_arugal : public CreatureScript
 
             void AttackStart(Unit* who) override
             {
-                AttackStartCaster(who, 100.0f); // void bolt range is 100.f
+                //AttackStartCaster(who, 100.0f); // void bolt range is 100.f
             }
 
             void UpdateAI(uint32 diff) override
