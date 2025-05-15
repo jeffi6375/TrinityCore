@@ -130,7 +130,7 @@ void EscortAI::MovementInform(uint32 type, uint32 id)
         if (id == POINT_LAST_POINT)
         {
             TC_LOG_DEBUG("scripts.ai.escortai", "EscortAI::MovementInform: returned to before combat position ({})", me->GetGUID().ToString());
-            me->SetWalk(!_running);
+            me->SetWalk(false);
             RemoveEscortState(STATE_ESCORT_RETURNING);
         }
         else if (id == POINT_HOME)

@@ -41,3 +41,4 @@
 * Improve loot tables
 * Archmage Arugal is evading a lot ✅
 * Prevent extra XP past max level
+* Escorts don't run but walk back to their pre-aggro point ✅
