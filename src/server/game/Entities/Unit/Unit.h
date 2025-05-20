@@ -1172,11 +1172,14 @@ class TC_GAME_API Unit : public WorldObject
 
         bool isTargetableForAttack(bool checkFakeDeath = true) const;
 
-        bool IsInShallowWater() const;
         bool IsInWater() const;
         bool IsUnderWater() const;
         bool isInAccessiblePlaceFor(Creature const* c) const;
+    private:
+        bool IsInShallowWater(Creature const* c) const;
+        bool IsInDeepWater(Creature const* c) const;
 
+    public:
         void SendHealSpellLog(HealInfo& healInfo, bool critical = false);
         int32 HealBySpell(HealInfo& healInfo, bool critical = false);
         void SendEnergizeSpellLog(Unit* victim, uint32 spellId, int32 damage, Powers powerType);

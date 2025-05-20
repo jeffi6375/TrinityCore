@@ -43,3 +43,4 @@
 * Escorts don't run but walk back to their pre-aggro point ✅
 * Samophlange doesn't work when you get it
 * Mobs don't attack when the player is in shallow water ✅
+* Mobs that only inhabit water evade when jumping out of the water ✅
