@@ -262,6 +262,13 @@ class boss_archmage_arugal : public CreatureScript
                 events.ScheduleEvent(EVENT_THUNDERSHOCK, 10s);
             }
 
+            // @hearthwards-begin
+            /*void AttackStart(Unit* who) override
+            {
+                AttackStartCaster(who, 100.0f); // void bolt range is 100.f
+            }*/
+           // @hearthwards-end
+
             void UpdateAI(uint32 diff) override
             {
                 if (!UpdateVictim())

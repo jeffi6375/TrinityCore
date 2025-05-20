@@ -3153,14 +3153,17 @@ bool Unit::isInBackInMap(Unit const* target, float distance, float arc) const
 
 bool Unit::isInAccessiblePlaceFor(Creature const* c) const
 {
+    // @hearthwards-begin
     if (IsInShallowWater(c))
         return c->CanWalk() || c->CanFly();
     else if (IsInWater() || IsInDeepWater(c))
+    // @hearthwards-end
         return c->CanEnterWater();
     else
         return c->CanWalk() || c->CanFly();
 }
 
+// @hearthwards-begin
 bool Unit::IsInShallowWater(Creature const* c) const
 {
     bool isInShallowWater = false;
@@ -3177,6 +3180,7 @@ bool Unit::IsInDeepWater(Creature const* c) const
 {
     return !IsInShallowWater(c) && GetLiquidStatus();
 }
+// @hearthwards-end
 
 bool Unit::IsInWater() const
 {
