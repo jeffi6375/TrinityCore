@@ -1172,6 +1172,7 @@ class TC_GAME_API Unit : public WorldObject
 
         bool isTargetableForAttack(bool checkFakeDeath = true) const;
 
+        bool IsInShallowWater() const;
         bool IsInWater() const;
         bool IsUnderWater() const;
         bool isInAccessiblePlaceFor(Creature const* c) const;

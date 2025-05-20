@@ -3153,10 +3153,26 @@ bool Unit::isInBackInMap(Unit const* target, float distance, float arc) const
 
 bool Unit::isInAccessiblePlaceFor(Creature const* c) const
 {
-    if (IsInWater())
+    if (IsInShallowWater())
+        return c->CanWalk() || c->CanFly();
+    else if (IsInWater())
         return c->CanEnterWater();
     else
         return c->CanWalk() || c->CanFly();
+}
+
+bool Unit::IsInShallowWater() const
+{
+    bool isInShallowWater = false;
+    LiquidData liquidStatus;
+    ZLiquidStatus status = GetMap()->GetLiquidStatus(GetPhaseMask(), GetPositionX(), GetPositionY(), GetPositionZ(), {}, &liquidStatus);
+
+    if (status == LIQUID_MAP_IN_WATER)
+    {
+        isInShallowWater = GetPositionZ() - liquidStatus.depth_level < c->GetCollisionHeight() * 0.4f;
+    }
+
+    return isInShallowWater;
 }
 
 bool Unit::IsInWater() const
