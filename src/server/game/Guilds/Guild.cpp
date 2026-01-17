@@ -1132,6 +1132,11 @@ bool Guild::Create(Player* pLeader, std::string_view name)
 
     CharacterDatabase.CommitTransaction(trans);
 
+    // @hearthwards-begin
+    // Initial guild bank tab is free.
+    _CreateNewBankTab();
+    // @hearthwards-end
+
     if (ret)
         sScriptMgr->OnGuildCreate(this, pLeader, m_name);
 

@@ -29,7 +29,7 @@
 * Some quests without a level are showing a gold reward
 * Mail across factions
 * Match decay times of looted corpses versus non-looted since looting is important ✅
-* Lower guild bank tab costs since less signatures are required ✅
+* Lower guild bank tab costs or give first tab for free since less signatures are required ✅
 * Murk Deep quest doesn't have the mobs spawning and running from the ocean
 * Rares and rare elites always drop a green item with a random suffix ❗
 * Rare elites are like bosses and always drop a blue item ❗
@@ -44,3 +44,4 @@
 * Samophlange doesn't work when you get it
 * Mobs don't attack when the player is in shallow water ✅
 * Mobs that only inhabit water evade when jumping out of the water ✅
+* Disable XP gain in raids
